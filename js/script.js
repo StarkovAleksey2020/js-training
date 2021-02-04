@@ -19,8 +19,6 @@ let cake = [
   { code: "mini_cake_8", nameRu: "«Блюз»", nameEn: "«Blues»", amount: 0, priceRu: 90.00, priceEn: 9.00, image: 'img/mini-cake-8.jpg' },
 ];
 
-let locale = ['ru', 'en'];
-
 let cakeBlockPoint = document.getElementById("cakeBlock");
 let cakeCardPoint = document.getElementById("cakeCardPoint");
 
@@ -29,53 +27,51 @@ function addCartListener(id) {
   let addCartButton = document.getElementById(id);
   addCartButton.addEventListener("click", () => { console.log(`Clicked button id=${id}`);})
 }
-function logRu(arr, pointParent, pointOriginal) {
-  for (let index = 0; index < arr.length; index++) {
+
+function getLocalizedName(arrayItem) { 
+  if ( window.navigator.language.slice(0, 2) === "en" ) {
+    return arrayItem.nameEn;
+  } else if ( window.navigator.language.slice(0, 2) === "ru" ) {
+    return arrayItem.nameRu;
+  }
+}
+
+function getLocalizedPrice(arrayItem) { 
+  if ( window.navigator.language.slice(0, 2) === "en" ) {
+    return "$" + arrayItem.priceEn;
+  } else if ( window.navigator.language.slice(0, 2) === "ru" ) {
+    return arrayItem.priceRu + " ₽";
+  }
+}
+
+function getLocalizedAddToCartButton() {  
+  if ( window.navigator.language.slice(0, 2) === "en" ) {
+    return "Add to cart";
+  } else if ( window.navigator.language.slice(0, 2) === "ru" ) {
+    return "В корзину";
+  }
+}
+
+function addCakeCard(cakeArray, pointParent, pointOriginal) {
+  for (let arrayIndex = 0; arrayIndex < cakeArray.length; arrayIndex++) {
     let newCard = document.createElement("card");
     newCard.innerHTML = `<div class="cake-card">
     <div class="cake-card-image--block">
-      <img src="${arr[index].image}" class="cake-card-image" alt="Cake ${[index]}"/>
+      <img src="${cakeArray[arrayIndex].image}" class="cake-card-image" alt="Cake ${[arrayIndex]}"/>
     </div>
     <div class="cake-card-info">
-      <p class="cake-card-name">${arr[index].nameRu}</p>
-      <p class="cake-card-price">${arr[index].priceRu} ₽</p>
+      <p class="cake-card-name">${getLocalizedName(cakeArray[arrayIndex])}</p>
+      <p class="cake-card-price">${getLocalizedPrice(cakeArray[arrayIndex])}</p>
     </div>
     <div class="cake-card-buttons">
-      <button class="cake-button-contract" id="card${index}">Add to cart</button>
+      <button class="cake-button-contract" id="card${arrayIndex}">${getLocalizedAddToCartButton()}</button>
     </div>
     </div>`;
     pointParent.insertBefore(newCard, pointOriginal.nextSibling);
-    let cardId = 'card' + index;
+    let cardId = 'card' + arrayIndex;
     addCartListener(cardId);
-  }
-}
-function logEn(arr, pointParent, pointOriginal) {
-  for (let index = 0; index < arr.length; index++) {
-    let newCard = document.createElement("card");
-    newCard.innerHTML = `<div class="cake-card">
-    <div class="cake-card-image--block">
-      <img src="${arr[index].image}" class="cake-card-image" alt="Cake ${[index]}"/>
-    </div>
-    <div class="cake-card-info">
-      <p class="cake-card-name">${arr[index].nameEn}</p>
-      <p class="cake-card-price">${arr[index].priceEn} $</p>
-    </div>
-    <div class="cake-card-buttons">
-      <button class="cake-button-contract" id="card${index}">Add to cart</button>
-    </div>
-    </div>`;
-    pointParent.insertBefore(newCard, pointOriginal.nextSibling);
-    let cardId = 'card' + index;
-    addCartListener(cardId);
-  }
-}
-function showCake(arr, lang, pointParent, pointOriginal) {
-  if (lang === 'ru') {
-    logRu(arr, pointParent, pointOriginal);
-  } else {
-    logEn(arr, pointParent, pointOriginal);
   }
 }
 
 // Calls
-showCake(cake, locale[1], cakeBlockPoint, cakeCardPoint);
+addCakeCard(cake, cakeBlockPoint, cakeCardPoint);

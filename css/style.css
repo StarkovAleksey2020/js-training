@@ -60,3 +60,21 @@
   z-index: 11;
   border-radius: 4px;
 }
+.cake-button-contract {
+  width: 98px;
+  min-height: 36px;
+  border-radius: 4px;
+  background: #a67122;
+  border: 1px solid #a67122;
+  outline: none;
+  box-shadow: none;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+.cake-button-contract:hover {
+  background: #cf8e2c;
+  border: 1px solid #cf8e2c;
+  outline: none;
+}
