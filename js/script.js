@@ -1,5 +1,10 @@
 'use strict';
 // Variables&Arrays
+let headers = [
+  { code: "cakeTitle", nameRu: "Торты", nameEn: "Cakes" },
+  { code: "bakeryTitle", nameRu: "Выпечка", nameEn: "Bakery" },
+];
+
 let cake = [
   { code: "cake_1", nameRu: "«Торжество»", nameEn: "«Celebration»", amount: 0, priceRu: 1400.00, priceEn: 140.00, image: 'img/cake-1.jpg' },
   { code: "cake_2", nameRu: "«Одиссей»", nameEn: "«Odysseus»", amount: 0, priceRu: 1200.00, priceEn: 120.00, image: 'img/cake-2.jpg' },
@@ -18,9 +23,17 @@ let cake = [
   { code: "mini_cake_7", nameRu: "«Доффин»", nameEn: "«Doffin»", amount: 0, priceRu: 90.00, priceEn: 9.00, image: 'img/mini-cake-7.jpg' },
   { code: "mini_cake_8", nameRu: "«Блюз»", nameEn: "«Blues»", amount: 0, priceRu: 90.00, priceEn: 9.00, image: 'img/mini-cake-8.jpg' },
 ];
+let cakeWrapperPoint = document.getElementById("cakeWrapper");
+let cakeTitlePoint = document.getElementById("cakeTitlePoint");
+
+let bakeryWrapperPoint = document.getElementById("bakeryWrapper");
+let bakeryTitlePoint = document.getElementById("bakeryTitlePoint");
 
 let cakeBlockPoint = document.getElementById("cakeBlock");
 let cakeCardPoint = document.getElementById("cakeCardPoint");
+
+let bakeryBlockPoint = document.getElementById("bakeryBlock");
+let bakeryCardPoint = document.getElementById("bakeryCardPoint");
 
 // Functions
 function addCartListener(id) { 
@@ -52,6 +65,17 @@ function getLocalizedAddToCartButton() {
   }
 }
 
+function getLocalizedHeader(headerArray, headerCode) {  
+  if ( window.navigator.language.slice(0, 2) === "en" ) {
+    return headerArray.find( x => x.code === headerCode).nameEn;
+  } else if ( window.navigator.language.slice(0, 2) === "ru" ) {
+    return headerArray.find( x => x.code === headerCode).nameRu;
+  }
+}
+
+// Description: the function takes as an input an array of objects to display, as well as the mount points of the object cards - parent
+// and original
+//
 function addCakeCard(cakeArray, pointParent, pointOriginal) {
   for (let arrayIndex = 0; arrayIndex < cakeArray.length; arrayIndex++) {
     let newCard = document.createElement("card");
@@ -73,5 +97,18 @@ function addCakeCard(cakeArray, pointParent, pointOriginal) {
   }
 }
 
+// Description: the function takes as an input an array of objects to display, a title code, as well as the mount points of the object
+// cards - parent and original
+//
+function addTitleToSection(headerArray, headerCode, pointParent, pointOriginal) {  
+  let newTitle = document.createElement("div");
+  newTitle.classList.add("block-title");
+  newTitle.innerHTML = `<h3 class="block-title-header">${getLocalizedHeader(headerArray, headerCode)}</h3>`;
+  pointParent.insertBefore(newTitle, pointOriginal.nextSibling);
+}
 // Calls
-addCakeCard(cake, cakeBlockPoint, cakeCardPoint);
+addTitleToSection(headers, "cakeTitle", cakeWrapperPoint, cakeTitlePoint);
+addTitleToSection(headers, "bakeryTitle", bakeryWrapperPoint, bakeryTitlePoint);
+
+addCakeCard(cake.slice(0, 8), cakeBlockPoint, cakeCardPoint);
+addCakeCard(cake.slice(8), bakeryBlockPoint, bakeryCardPoint);
