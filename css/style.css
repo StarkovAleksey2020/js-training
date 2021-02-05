@@ -24,13 +24,13 @@
   align-items: center;
 }
 .cake-card {
-  width: 300px;
+  width: 280px;
   min-height: 300px;
   display: flex;
   flex-direction: column;
   text-align: center;
-  margin-right: 10px;
-  margin-bottom: 10px;
+  margin-right: 15px;
+  margin-bottom: 15px;
   background: #fffaf0;
 }
 .cake-card-info {
@@ -66,6 +66,13 @@
   z-index: 11;
   border-radius: 4px;
 }
+.cake-card-buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
 .cake-button-contract {
   width: 98px;
   min-height: 36px;
@@ -83,6 +90,25 @@
   background: #cf8e2c;
   border: 1px solid #cf8e2c;
   outline: none;
+}
+.cake-button-info {
+  width: 98px;
+  min-height: 36px;
+  border: 1px solid #cf8e2c;
+  border-radius: 4px;
+  background: inherit;
+  outline: none;
+  box-shadow: none;
+  color: #cf8e2c;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 13px;
+}
+.cake-button-info:hover {
+  border: 1px solid #be8228;
+  color: #ffffff;
+  outline: none;
+  background: #be8228;
 }
 .bakery {
   padding: 30px 0;
@@ -166,4 +192,9 @@
   background: #cf8e2c;
   border: 1px solid #cf8e2c;
   outline: none;
+}
+.block-title-header {
+  text-transform: uppercase;
+  font-size: 28px;
+  margin: 20px auto 15px auto;
 }

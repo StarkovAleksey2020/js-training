@@ -36,11 +36,16 @@ let bakeryBlockPoint = document.getElementById("bakeryBlock");
 let bakeryCardPoint = document.getElementById("bakeryCardPoint");
 
 // Functions
+
+// Description: adds a listener for clicking the add to shopping cart button
+//
 function addCartListener(id) { 
   let addCartButton = document.getElementById(id);
   addCartButton.addEventListener("click", () => { console.log(`Clicked button id=${id}`);})
 }
 
+// Description: adds a localized product name to the card
+//
 function getLocalizedName(arrayItem) { 
   if ( window.navigator.language.slice(0, 2) === "en" ) {
     return arrayItem.nameEn;
@@ -49,6 +54,8 @@ function getLocalizedName(arrayItem) {
   }
 }
 
+// Description: adds a localized product price to the card
+//
 function getLocalizedPrice(arrayItem) { 
   if ( window.navigator.language.slice(0, 2) === "en" ) {
     return "$" + arrayItem.priceEn;
@@ -57,6 +64,8 @@ function getLocalizedPrice(arrayItem) {
   }
 }
 
+// Description: adds a localized name for the add to shopping cart button
+//
 function getLocalizedAddToCartButton() {  
   if ( window.navigator.language.slice(0, 2) === "en" ) {
     return "Add to cart";
@@ -65,6 +74,18 @@ function getLocalizedAddToCartButton() {
   }
 }
 
+// Description: adds a localized name for the product information button
+//
+function getLocalizedInfoButton() { 
+  if ( window.navigator.language.slice(0, 2) === "en" ) {
+    return "More details";
+  } else if ( window.navigator.language.slice(0, 2) === "ru" ) {
+    return "Подробнее";
+  }
+}
+
+// Description: adds a localized bloks header
+//
 function getLocalizedHeader(headerArray, headerCode) {  
   if ( window.navigator.language.slice(0, 2) === "en" ) {
     return headerArray.find( x => x.code === headerCode).nameEn;
@@ -88,6 +109,7 @@ function addCakeCard(cakeArray, pointParent, pointOriginal) {
       <p class="cake-card-price">${getLocalizedPrice(cakeArray[arrayIndex])}</p>
     </div>
     <div class="cake-card-buttons">
+      <button class="cake-button-info" id="cardInfo${arrayIndex}">${getLocalizedInfoButton()}</button>
       <button class="cake-button-contract" id="card${arrayIndex}">${getLocalizedAddToCartButton()}</button>
     </div>
     </div>`;
@@ -106,9 +128,12 @@ function addTitleToSection(headerArray, headerCode, pointParent, pointOriginal) 
   newTitle.innerHTML = `<h3 class="block-title-header">${getLocalizedHeader(headerArray, headerCode)}</h3>`;
   pointParent.insertBefore(newTitle, pointOriginal.nextSibling);
 }
+
 // Calls
+// Add section headers
 addTitleToSection(headers, "cakeTitle", cakeWrapperPoint, cakeTitlePoint);
 addTitleToSection(headers, "bakeryTitle", bakeryWrapperPoint, bakeryTitlePoint);
 
+// Add cards
 addCakeCard(cake.slice(0, 8), cakeBlockPoint, cakeCardPoint);
 addCakeCard(cake.slice(8), bakeryBlockPoint, bakeryCardPoint);
